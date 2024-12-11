@@ -1,0 +1,22 @@
+{
+  "name": "forum-be",
+  "version": "1.0.0",
+  "description": "node js \u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D forum node js backend server",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "dotenv -e .env nodemon server.js"
+  },
+  "author": "simsonmoses",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "mongodb": "^6.11.0",
+    "mongoose": "^8.8.4",
+    "sequelize": "^6.32.1"
+  }
+}
