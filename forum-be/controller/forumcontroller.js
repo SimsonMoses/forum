@@ -11,15 +11,21 @@ export const createForum = async(req,res,body) =>{
         console.log(`Error Occured: ${err}`);
         res.statusCode=500
         res.write(JSON.stringify({"message":"Service error"}))
+        res.end()
     }
 }
 
-const getAllForum = async(req,res)=>{
+export const getAllForum = async (req,res)=>{
     try {
-        const forums = Forum.find();
-        res.status(200).json(forums);
+        const forums = await Forum.find();
+        res.statusCode=200
+        res.write(JSON.stringify(forums))
+        res.end()
     } catch (error) {
-        console.log(`Error occured: ${error}`);
+        console.log(`Error Occured: ${error}`);
+        res.statusCode=500
+        res.write(JSON.stringify({"message":"Service error"}))
+        res.end()
     }
 }
 
