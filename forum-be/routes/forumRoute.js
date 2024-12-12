@@ -1,4 +1,4 @@
-import { createForum,getAllForum } from '../controller/forumcontroller.js'
+import { createForum, getAllForum, getAllForumByCategory } from '../controller/forumcontroller.js'
 import { parseJson } from '../util/parseJson.js';
 
 export const forumRoute = async (req, res) => {
@@ -9,10 +9,11 @@ export const forumRoute = async (req, res) => {
         } catch (error) {
             console.log(error);
         }
-    }else if(req.method === 'GET' && req.url === '/api/forum'){
-        getAllForum(req,res)
-    } 
-    else {
+    } else if (req.method === 'GET' && req.url === '/api/forum') {
+        getAllForum(req, res)
+    } else if (req.method === 'GET' && req.url === '/api/forum/category') {
+        getAllForumByCategory(req, res);
+    } else {
         res.statusCode = 404
         res.end(JSON.stringify({ "message": "Not found" }))
     }
