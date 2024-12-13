@@ -1,4 +1,4 @@
-import { createForum, getAllForum, getAllForumByCategory, updateForumCategory } from '../controller/forumcontroller.js'
+import { createForum, getAllForum, getAllForumByCategory, updateForumCategory, deleteForum } from '../controller/forumcontroller.js'
 import { parseJson } from '../util/parseJson.js';
 
 export const forumRoute = async (req, res) => {
@@ -20,8 +20,13 @@ export const forumRoute = async (req, res) => {
         } catch (error) {
             console.log(error);
         }
+    } else if (req.method === 'DELETE' && req.url.match('\/api\/forum\/([0-9]+)')) {
+        deleteForum(req,res)
     } else {
         res.statusCode = 404
+        console.log(req.url);        
         res.end(JSON.stringify({ "message": "Not found" }))
     }
 }
+
+// } else if (req.url.match(/\/api\/users\/([0-9]+)/) && req.method === 'GET') {

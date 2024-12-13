@@ -48,10 +48,20 @@ export const updateForumCategory = async (req,res,body)=>{
     }
 }
 
-// todo: update
-
-
 // todo:delete
+export const deleteForum = async (req,res)=>{
+    try {
+        const id = req.url.split('/')[3];
+        console.log(id);
+        var data = await Forum.findByIdAndDelete(id);
+        console.log(data);
+        handleResponse(res,204,'Deleted Successfully')
+        
+    } catch (err) {
+        console.log(`Error Occured: ${err}`);
+        handleResponse(res,500,'Service Error')
+    }
+}
 
 // module.exports ={
 //     createForum:createForum(req,res),
