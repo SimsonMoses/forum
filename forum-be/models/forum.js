@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
+import {v4 as uuid} from "uuid";
 
 const forumSchema = new mongoose.Schema({
     title:{
         type:String,
         required:true,
-        default:'JAVA'
     },
     creator:{
         type:String,
@@ -14,13 +14,35 @@ const forumSchema = new mongoose.Schema({
     description:{
         type:String,
         required:true,
-        length:1000
+        length:100
     },
-    
+    forumImage:String,
+    // customId: {
+    //     type: String,
+    //     required: true,
+    //     unique: true, // Ensures uniqueness
+    //     default:uuid
+    // }
+    publishedStatus:{
+        type:String,
+        default:'in_progress'
+    },
+    deletedAt:Date
 },{
     timestamps: true, // Automatically add `createdAt` and `updatedAt` fields
 }
 )
+
+// forumSchema.plugin(AutoIncrement, { inc_field: 'customId' })
+// ID autoincrement 
+/*
+1. counter collection
+2. use plugin
+3. uuid
+4. mongno default _id
+5. use custom but (not presistent)
+6. db auto increment (not for mongodb)
+*/
 
 forumSchema.statics={
     findByCategory(category){

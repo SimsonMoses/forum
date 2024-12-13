@@ -8,5 +8,4 @@ export const handleResponse = (res,status,message,data)=>{
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(response));
 }
-
 // todo: error message

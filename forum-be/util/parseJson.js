@@ -11,7 +11,6 @@ export const parseJson = (req) => {
             } catch (error) {
                 reject(new Error('Invalid JSON'))
             }
-
         })
     })
 }
