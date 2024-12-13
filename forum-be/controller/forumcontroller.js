@@ -1,9 +1,11 @@
 import Forum from '../models/forum.js'
+import { parseJson } from '../util/parseJson.js';
 import {handleResponse} from '../util/response.js'
 
 
-export const createForum = async(req,res,body) =>{
+export const createForum = async(req,res) =>{
     try{
+        let body = await parseJson(req)
         const {title,creator,category,description} = body;
         const newForum = await Forum.create({title,creator,category,description});
         handleResponse(res,201,"Created Successfully",null)
@@ -34,8 +36,9 @@ export const getAllForumByCategory = async (req,res)=>{
     }
 }
 
-export const updateForumCategory = async (req,res,body)=>{
+export const updateForumCategory = async (req,res)=>{
     try{
+        let body = parseJson(req)
         const {id,title,category,description} = body;
         const newforum = await Forum.findByIdAndUpdate(id,{title,category,description})
         if(!newforum){
@@ -62,8 +65,3 @@ export const deleteForum = async (req,res)=>{
         handleResponse(res,500,'Service Error')
     }
 }
-
-// module.exports ={
-//     createForum:createForum(req,res),
-//     getAllForum
-// }
