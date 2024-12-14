@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import {v4 as uuid} from "uuid";
+import bcrypt from 'bcrypt'
 
+const SALT_ROUNDS = 10
 
 const usersSchema = new mongoose.Schema(
     {
@@ -28,4 +30,18 @@ const usersSchema = new mongoose.Schema(
     }
 )
 
+usersSchema.pre('save',async function (next){
+    if(!this.isModified('password')) return next();
+    try{
+        const salt = await bcrypt.genSalt(SALT_ROUNDS);
+        this.password = await bcrypt.hash(this.password,salt);
+        next();
+    }catch (error){
+        next(error)
+    }
+})
+
+usersSchema.methods.isValidPassword = async function (password){
+    return bcrypt.compare(password,this.password)
+}
 export const User = mongoose.model('User', usersSchema);
