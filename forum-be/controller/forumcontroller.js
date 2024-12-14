@@ -18,21 +18,28 @@ export const createForum = async (req, res) => {
 export const getAllForum = async (req, res) => {
     try {
         // TODO: filter query param
-        const url = new URL(req.url,`http://${req.headers.host}`)
-        const {creator,category,title,publishedStatus,limit=10,offset=0} = Object.fromEntries(url.searchParams.entries());
+        const url = new URL(req.url, `http://${req.headers.host}`)
+        const {
+            creator,
+            category,
+            title,
+            publishedStatus,
+            limit = 10,
+            offset = 0
+        } = Object.fromEntries(url.searchParams.entries());
         const filter = {}
-        if(creator) filter.creator = creator;
-        if(category) filter.category = category;
-        if(title) filter.title = {$regex: title, $options:'i'};
-        if(publishedStatus) filter.publishedStatus = {$regex: publishedStatus,$options:'i'};
+        if (creator) filter.creator = creator;
+        if (category) filter.category = category;
+        if (title) filter.title = {$regex: title, $options: 'i'};
+        if (publishedStatus) filter.publishedStatus = {$regex: publishedStatus, $options: 'i'};
         console.log(url.searchParams)
         console.log(`getAllForum filters: ${JSON.stringify(filter)}`)
         const totalRecords = await Forum.countDocuments(filter)
         const forums = await Forum.find(filter).skip(parseInt(offset)).limit(parseInt(limit));
         const response = {
             totalRecords,
-            offset:offset,
-            limit:limit,
+            offset: offset,
+            limit: limit,
             forums: forumListResponse(forums)
         };
         handleResponse(res, 200, "Retrieved Successfully", response)
