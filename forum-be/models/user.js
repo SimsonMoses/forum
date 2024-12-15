@@ -1,8 +1,10 @@
 import mongoose from "mongoose";
 import {v4 as uuid} from "uuid";
 import bcrypt from 'bcrypt'
+import {SocialSchema} from "./model.js";
 
 const SALT_ROUNDS = 10
+
 
 const usersSchema = new mongoose.Schema(
     {
@@ -23,7 +25,12 @@ const usersSchema = new mongoose.Schema(
         category:{
             type:[],
             default:[1]
-        }
+        },
+        phone:String,
+        social: {
+            type: SocialSchema
+        },
+        role:String // TODO: need to set as enum
     },
     {
         timestamps:true
