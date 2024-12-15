@@ -7,18 +7,18 @@ export const userRoute = async (req, res) => {
     console.log('user routes log')
     const url = new URL(req.url, `http://${req.headers.host}`)
 
-    if (req.method === 'POST' && req.url === '/api/user/register') {
-        createUser(req, res)
+    if (req.method === 'POST' && req.url === '/api/user/create') {
+        validateToken(req,res,['admin','super_admin'],()=>createUser(req, res));
     } else if (req.method === 'POST' && req.url === '/api/user/login') {
-        loginUser(req, res)
+        await loginUser(req, res)
     } else if (req.method === 'GET' && req.url === '/api/user/me') {
-        validateToken(req, res, () => me(req, res))
+        validateToken(req, res,'', () => me(req, res))
     } else if (req.method === 'GET' && req.url === '/api/user/profile') {
-        validateToken(req, res, () => getUserProfile(req, res))
+        validateToken(req, res, 'admin',() => getUserProfile(req, res))
     } else if (req.method === 'PUT' && req.url === '/api/user/profile/update') {
-        validateToken(req, res, () => updateUser(req, res))
+        validateToken(req, res, '',() => updateUser(req, res))
     } else if (req.method === 'GET' && url.pathname === '/api/user/profile/get-all') {
-        validateToken(req, res, () => getAllUsers(req, res))
+        validateToken(req, res, '',() => getAllUsers(req, res))
     } else {
         handleResponse(res, 404, 'Not found');
     }

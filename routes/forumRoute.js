@@ -13,17 +13,17 @@ import {validateToken} from "../middleware/Authentication.js";
 export const forumRoute = async (req, res) => {
     try {
         if (req.method === 'POST' && req.url === '/api/forum') {
-            validateToken(req,res,()=> createForum(req, res))
+            validateToken(req,res,'admin',()=> createForum(req, res));
         } else if (req.method === 'GET' && req.url.startsWith('/api/forum')) {
-            getAllForum(req, res)
+            validateToken(req,res,'',()=> getAllForum(req, res));
         } else if (req.method === 'GET' && req.url === '/api/forum/category') {
-            getAllForumByCategory(req, res);
+            validateToken(req,res,'',()=>getAllForumByCategory(req, res))
         } else if (req.method === 'PUT' && req.url === '/api/forum') {
-            updateForumCategory(req, res)
+            validateToken(req,res,'',()=> updateForumCategory(req, res));
         } else if (req.method === 'DELETE' && req.url.match('\/api\/forum\/([0-9]+)')) {
-            deleteForum(req, res)
+            validateToken(res,req,'',()=> deleteForum(req, res))
         } else if (req.method === 'GET' && req.url.match('\/api\/forum\/([0-9]+)')) {
-            getForumById(req, res)
+            validateToken(res,req,'',()=>getForumById(req, res))
         } else {
             handleResponse(res, 404, 'Not found')
         }

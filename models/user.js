@@ -30,7 +30,11 @@ const usersSchema = new mongoose.Schema(
         social: {
             type: SocialSchema
         },
-        role:String // TODO: need to set as enum
+        role: {
+            type:String,
+            enum:['super_admin','admin','user'],
+            default:'user'
+        } // TODO: need to set as enum
     },
     {
         timestamps:true
