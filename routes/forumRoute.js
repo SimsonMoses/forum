@@ -13,7 +13,7 @@ import {validateToken} from "../middleware/Authentication.js";
 export const forumRoute = async (req, res) => {
     try {
         if (req.method === 'POST' && req.url === '/api/forum') {
-            validateToken(req,res,()=> createForum(req, res))
+            validateToken(req,res,'',()=> createForum(req, res))
         } else if (req.method === 'GET' && req.url.startsWith('/api/forum')) {
             getAllForum(req, res)
         } else if (req.method === 'GET' && req.url === '/api/forum/category') {
