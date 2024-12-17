@@ -1,5 +1,6 @@
 import {ForumMemberRequest} from "../models/forumMemberRequest.js";
 import {handleResponse} from "../util/response.js";
+import {parseJson} from "../util/parseJson.js";
 
 export const requestToJoinForum = async (req, res) => {
     try {
@@ -31,3 +32,30 @@ export const requestToJoinForum = async (req, res) => {
         handleResponse(res, 500, 'unable to request ', null)
     }
 }
+
+// todo: invite member to join the forum
+export const inviteMemberToForum = async (req,res)=>{
+    try{
+        const {userId,forumId} = await parseJson(req)
+        //todo: need to valiat whether user is admin of group
+        //todo: check whether userid is member of group
+        //todo: userId already requested
+        let isUserExist = await ForumMemberRequest.findOne({userId,forumId})
+        if(isUserExist) return handleResponse(res, 409, `User already ${isUserExist.requestType}`)
+        const memberInvite = await ForumMemberRequest.create({
+            userId:userId,
+            forumId:forumId,
+            requestType: 'invited',
+        })
+        return handleResponse(res, 201, 'invite sent successfully', memberInvite);
+    }catch (error) {
+        console.log(`Error occurred: ${error}`);
+        if (error.code === 11000) {
+            return handleResponse(res,'User might already requested or invited')
+        }
+        handleResponse(res, 500, 'unable to invite sent successfully', error)
+    }
+}
+
+
+// todo: getAll member not joined | request forum

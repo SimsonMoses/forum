@@ -9,7 +9,7 @@ export const parseJson = (req) => {
             try {
                 resolve(JSON.parse(body))
             } catch (error) {
-                reject(new Error('Invalid JSON'))
+                reject(('Invalid JSON'))
             }
         })
     })
