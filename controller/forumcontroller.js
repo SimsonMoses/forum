@@ -64,6 +64,7 @@ const mapForumResponse = (forum) => ({
     publishedStatus: forum.publishedStatus
 })
 
+// TODO: need to remove
 export const getAllForumByCategory = async (req, res) => {
     try {
         const forums = await Forum.findByCategory(1);
@@ -84,7 +85,7 @@ export const updateForumCategory = async (req, res) => {
         }
         handleResponse(res, 200, 'Updated Successfully', null)
     } catch (err) {
-        console.log(`Error Occured: ${err}`);
+        console.log(`Error Occurred: ${err}`);
         handleResponse(res, 500, 'Service error', null)
     }
 }
@@ -98,7 +99,7 @@ export const deleteForum = async (req, res) => {
         handleResponse(res, 204, 'Deleted Successfully')
 
     } catch (err) {
-        console.log(`Error Occured: ${err}`);
+        console.log(`Error Occurred: ${err}`);
         handleResponse(res, 500, 'Service Error')
     }
 }
