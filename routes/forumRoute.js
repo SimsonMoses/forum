@@ -25,13 +25,11 @@ export const forumRoute = async (req, res) => {
             validateToken(res, req, '', () => deleteForum(req, res));
         } else if (req.method === 'GET' && req.url.match('\/api\/forum\/([0-9]+)')) {
             validateToken(res, req, '', () => getForumById(req, res));
-        } else if (req.method === 'POST' && req.url.match('\/api\/forum\/join\/')) {
-            validateToken(req,res,'',()=>requestToJoinForum(req,res));
-        }else {
+        } else {
             handleResponse(res, 404, 'Not found')
         }
     } catch (err) {
         console.log(`Forum Route Error Occurred: ${err}`);
-        handleResponse(res, 500, 'forumRouteError', null)
+        handleResponse(res, 404, 'End point Not found', null)
     }
 }
